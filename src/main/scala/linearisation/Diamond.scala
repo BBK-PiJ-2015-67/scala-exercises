@@ -43,8 +43,8 @@ object Diamond extends App {
   val aebcd = new A() with E with B with C with D
   // EBCD
   // DCBE
-  // D > B > A > AnyRef > Any > A > AnyRef > Any
-  // C > B > A > AnyRef > Any > A > AnyRef > Any
+  // D > B > A > AnyRef > Any > AnyRef > Any
+  // C > B > A > AnyRef > Any > AnyRef > Any
   // B > A > AnyRef > Any
   // E > D > B > A > AnyRef > Any > A > AnyRef > Any > C > B > A > AnyRef > Any > A > AnyRef > Any
   // E > D > C > B > A > AnyRef > Any
@@ -54,12 +54,21 @@ object Diamond extends App {
   // Class A: trait B: trait D: trait C: trait E
 
   val af = new A() with F
-  // A > AnyRef > Any > F >
+  // F >
   // C > B > A > AnyRef > Any > A > AnyRef > Any >
   // D > B > A > AnyRef > Any > A > AnyRef > Any >
   // E > C > B > A > AnyRef > Any > A > AnyRef > Any > D > B > A > AnyRef > Any > A > AnyRef > Any
   // F > E > C > D > B > A > AnyRef > Any
   // Class A: trait B: trait C: trait D: trait E: trait F
+
+  val afx = new A() with F with C with B with D with E
+  // FCBDE
+  // EDBCF
+
+  val abf = new A() with B with F
+  // BF
+  // FB
+
 
   foo(a)
   foo(ab)
@@ -69,6 +78,7 @@ object Diamond extends App {
   foo(aebcd)
   foo(aedcb)
   foo(af)
+  foo(afx)
 
   def foo(cls: A): Unit = {
     println(cls.func)
