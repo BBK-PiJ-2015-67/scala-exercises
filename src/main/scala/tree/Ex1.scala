@@ -33,6 +33,22 @@ object Tree {
     case Node(_, v, _) => v == n
   }
 
+  def sum(t: Tree): Int = t match {
+    case Leaf => 0
+    case Node(l, v, r) => v + sum(l) + sum(r)
+  }
+
+  def sumT(t: Tree): Int = {
+    def helper(acc: Int, ls: List[Tree]): Int = ls match {
+      case Nil => acc
+      case Leaf :: tl => helper(acc, tl)
+      case Node(l, v, r) :: tl => helper(acc + v, l :: r :: tl)
+    }
+    helper(0, List(t))
+  }
+
+  def average(t: Tree): Int = sumT(t) / sizeT(t)
+
   def inOrder(t: Tree): String = t match {
     case Leaf => ""
     case Node(l, v, r) => inOrder(l) + s" ${v.toString} " + inOrder(r)
@@ -59,8 +75,11 @@ object Test extends App {
   println(find(45, t))
   println(size(t))
   println(sizeT(t))
+  println(sum(t))
+  println(sumT(t))
 
   println(inOrder(t))
   println(preOrder(t))
   println(postOrder(t))
+  println(average(t))
 }
